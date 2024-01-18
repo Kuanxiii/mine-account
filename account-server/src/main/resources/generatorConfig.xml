@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE generatorConfiguration PUBLIC
+
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+
+<generatorConfiguration>
+
+    <context id="context" targetRuntime="MyBatis3">
+
+        <!--覆盖生成XML文件 -->
+
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
+
+        <commentGenerator>
+
+            <property name="suppressAllComments" value="true"/>
+
+            <property name="suppressDate" value="true"/>
+
+        </commentGenerator>
+
+        <!-- 数据库的相关配置 -->
+
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://101.133.229.103:13306/wgq"
+                        userId="root"
+                        password="root"/>
+
+        <javaTypeResolver>
+
+            <property name="forceBigDecimals" value="true"/>
+
+        </javaTypeResolver>
+
+        <!-- 实体类生成的位置 -->
+
+        <javaModelGenerator targetPackage="me.account.account.server.po" targetProject="account-server/src/main/java">
+
+            <property name="enableSubPackages" value="false"/>
+
+            <property name="trimStrings" value="true"/>
+
+        </javaModelGenerator>
+
+        <!-- *Mapper.xml 文件的位置 -->
+
+        <sqlMapGenerator targetPackage="mapper" targetProject="account-server/src/main/resources/mybatis">
+
+            <property name="enableSubPackages" value="false"/>
+
+        </sqlMapGenerator>
+
+        <!-- Mapper 接口文件的位置 -->
+
+        <javaClientGenerator targetPackage="me.account.account.server.mapper" targetProject="account-server/src/main/java" type="XMLMAPPER">
+
+            <property name="enableSubPackages" value="false"/>
+
+        </javaClientGenerator>
+
+        <!-- 相关表的配置 -->
+
+        <table tableName="billing_accounts" domainObjectName="BillingAccounts" enableCountByExample="false"  enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"/>
+
+        <table tableName="account_attribute" domainObjectName="AccountAttribute" enableCountByExample="false"  enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"/>
+
+    </context>
+
+</generatorConfiguration>

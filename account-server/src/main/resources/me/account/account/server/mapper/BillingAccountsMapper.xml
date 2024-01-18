@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.account.account.server.mapper.BillingAccountsMapper">
+  <resultMap id="BaseResultMap" type="me.account.account.server.po.BillingAccounts">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="day_no" jdbcType="INTEGER" property="dayNo" />
+    <result column="week_no" jdbcType="INTEGER" property="weekNo" />
+    <result column="mouth_no" jdbcType="INTEGER" property="mouthNo" />
+    <result column="stat" jdbcType="VARCHAR" property="stat" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="use_in" jdbcType="VARCHAR" property="useIn" />
+    <result column="main_attribute" jdbcType="INTEGER" property="mainAttribute" />
+    <result column="attribute" jdbcType="VARCHAR" property="attribute" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, day_no, week_no, mouth_no, stat, amount, use_in, main_attribute, attribute, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from billing_accounts
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from billing_accounts
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="me.account.account.server.po.BillingAccounts">
+    insert into billing_accounts (id, day_no, week_no, 
+      mouth_no, stat, amount, 
+      use_in, main_attribute, attribute, 
+      remark)
+    values (#{id,jdbcType=INTEGER}, #{dayNo,jdbcType=INTEGER}, #{weekNo,jdbcType=INTEGER}, 
+      #{mouthNo,jdbcType=INTEGER}, #{stat,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, 
+      #{useIn,jdbcType=VARCHAR}, #{mainAttribute,jdbcType=INTEGER}, #{attribute,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="me.account.account.server.po.BillingAccounts">
+    insert into billing_accounts
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="dayNo != null">
+        day_no,
+      </if>
+      <if test="weekNo != null">
+        week_no,
+      </if>
+      <if test="mouthNo != null">
+        mouth_no,
+      </if>
+      <if test="stat != null">
+        stat,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="useIn != null">
+        use_in,
+      </if>
+      <if test="mainAttribute != null">
+        main_attribute,
+      </if>
+      <if test="attribute != null">
+        attribute,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="dayNo != null">
+        #{dayNo,jdbcType=INTEGER},
+      </if>
+      <if test="weekNo != null">
+        #{weekNo,jdbcType=INTEGER},
+      </if>
+      <if test="mouthNo != null">
+        #{mouthNo,jdbcType=INTEGER},
+      </if>
+      <if test="stat != null">
+        #{stat,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="useIn != null">
+        #{useIn,jdbcType=VARCHAR},
+      </if>
+      <if test="mainAttribute != null">
+        #{mainAttribute,jdbcType=INTEGER},
+      </if>
+      <if test="attribute != null">
+        #{attribute,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="me.account.account.server.po.BillingAccounts">
+    update billing_accounts
+    <set>
+      <if test="dayNo != null">
+        day_no = #{dayNo,jdbcType=INTEGER},
+      </if>
+      <if test="weekNo != null">
+        week_no = #{weekNo,jdbcType=INTEGER},
+      </if>
+      <if test="mouthNo != null">
+        mouth_no = #{mouthNo,jdbcType=INTEGER},
+      </if>
+      <if test="stat != null">
+        stat = #{stat,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="useIn != null">
+        use_in = #{useIn,jdbcType=VARCHAR},
+      </if>
+      <if test="mainAttribute != null">
+        main_attribute = #{mainAttribute,jdbcType=INTEGER},
+      </if>
+      <if test="attribute != null">
+        attribute = #{attribute,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.account.account.server.po.BillingAccounts">
+    update billing_accounts
+    set day_no = #{dayNo,jdbcType=INTEGER},
+      week_no = #{weekNo,jdbcType=INTEGER},
+      mouth_no = #{mouthNo,jdbcType=INTEGER},
+      stat = #{stat,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      use_in = #{useIn,jdbcType=VARCHAR},
+      main_attribute = #{mainAttribute,jdbcType=INTEGER},
+      attribute = #{attribute,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
