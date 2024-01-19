@@ -16,7 +16,10 @@ CREATE TABLE `billing_accounts`
 CREATE TABLE `account_attribute`
 (
     id INTEGER NOT NULL AUTO_INCREMENT COMMENT '主键',
-    attribute_name VARCHAR(255) NOT NULL COMMENT '当日状态',
+    rigid_demand INTEGER NOT NULL COMMENT '是否刚需',
+    attribute_level INTEGER NOT NULL COMMENT '属性等级',
+    sup_attribute INTEGER COMMENT '上级属性',
+    attribute_name VARCHAR(255) NOT NULL COMMENT '属性名',
     attribute_desc VARCHAR(255) COMMENT '备注',
     PRIMARY KEY(`id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT '账单表';

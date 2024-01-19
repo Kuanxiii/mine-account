@@ -17,7 +17,7 @@
     id, day_no, week_no, mouth_no, stat, amount, use_in, main_attribute, attribute, remark
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from billing_accounts
     where id = #{id,jdbcType=INTEGER}
@@ -27,14 +27,14 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="me.account.account.server.po.BillingAccounts">
-    insert into billing_accounts (id, day_no, week_no, 
-      mouth_no, stat, amount, 
-      use_in, main_attribute, attribute, 
-      remark)
-    values (#{id,jdbcType=INTEGER}, #{dayNo,jdbcType=INTEGER}, #{weekNo,jdbcType=INTEGER}, 
-      #{mouthNo,jdbcType=INTEGER}, #{stat,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, 
-      #{useIn,jdbcType=VARCHAR}, #{mainAttribute,jdbcType=INTEGER}, #{attribute,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR})
+    insert into billing_accounts (id, day_no, week_no,
+                                  mouth_no, stat, amount,
+                                  use_in, main_attribute, attribute,
+                                  remark)
+    values (#{id,jdbcType=INTEGER}, #{dayNo,jdbcType=INTEGER}, #{weekNo,jdbcType=INTEGER},
+            #{mouthNo,jdbcType=INTEGER}, #{stat,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL},
+            #{useIn,jdbcType=VARCHAR}, #{mainAttribute,jdbcType=INTEGER}, #{attribute,jdbcType=VARCHAR},
+            #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="me.account.account.server.po.BillingAccounts">
     insert into billing_accounts
@@ -139,14 +139,14 @@
   <update id="updateByPrimaryKey" parameterType="me.account.account.server.po.BillingAccounts">
     update billing_accounts
     set day_no = #{dayNo,jdbcType=INTEGER},
-      week_no = #{weekNo,jdbcType=INTEGER},
-      mouth_no = #{mouthNo,jdbcType=INTEGER},
-      stat = #{stat,jdbcType=VARCHAR},
-      amount = #{amount,jdbcType=DECIMAL},
-      use_in = #{useIn,jdbcType=VARCHAR},
-      main_attribute = #{mainAttribute,jdbcType=INTEGER},
-      attribute = #{attribute,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR}
+        week_no = #{weekNo,jdbcType=INTEGER},
+        mouth_no = #{mouthNo,jdbcType=INTEGER},
+        stat = #{stat,jdbcType=VARCHAR},
+        amount = #{amount,jdbcType=DECIMAL},
+        use_in = #{useIn,jdbcType=VARCHAR},
+        main_attribute = #{mainAttribute,jdbcType=INTEGER},
+        attribute = #{attribute,jdbcType=VARCHAR},
+        remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

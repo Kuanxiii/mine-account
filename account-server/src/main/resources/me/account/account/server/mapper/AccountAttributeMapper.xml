@@ -3,14 +3,17 @@
 <mapper namespace="me.account.account.server.mapper.AccountAttributeMapper">
   <resultMap id="BaseResultMap" type="me.account.account.server.po.AccountAttribute">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="rigid_demand" jdbcType="INTEGER" property="rigidDemand" />
+    <result column="attribute_level" jdbcType="INTEGER" property="attributeLevel" />
+    <result column="sup_attribute" jdbcType="INTEGER" property="supAttribute" />
     <result column="attribute_name" jdbcType="VARCHAR" property="attributeName" />
     <result column="attribute_desc" jdbcType="VARCHAR" property="attributeDesc" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, attribute_name, attribute_desc
+    id, rigid_demand, attribute_level, sup_attribute, attribute_name, attribute_desc
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from account_attribute
     where id = #{id,jdbcType=INTEGER}
@@ -20,16 +23,27 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="me.account.account.server.po.AccountAttribute">
-    insert into account_attribute (id, attribute_name, attribute_desc
-      )
-    values (#{id,jdbcType=INTEGER}, #{attributeName,jdbcType=VARCHAR}, #{attributeDesc,jdbcType=VARCHAR}
-      )
+    insert into account_attribute (id, rigid_demand, attribute_level,
+                                   sup_attribute, attribute_name, attribute_desc
+    )
+    values (#{id,jdbcType=INTEGER}, #{rigidDemand,jdbcType=INTEGER}, #{attributeLevel,jdbcType=INTEGER},
+            #{supAttribute,jdbcType=INTEGER}, #{attributeName,jdbcType=VARCHAR}, #{attributeDesc,jdbcType=VARCHAR}
+           )
   </insert>
   <insert id="insertSelective" parameterType="me.account.account.server.po.AccountAttribute">
     insert into account_attribute
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="rigidDemand != null">
+        rigid_demand,
+      </if>
+      <if test="attributeLevel != null">
+        attribute_level,
+      </if>
+      <if test="supAttribute != null">
+        sup_attribute,
       </if>
       <if test="attributeName != null">
         attribute_name,
@@ -42,6 +56,15 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="rigidDemand != null">
+        #{rigidDemand,jdbcType=INTEGER},
+      </if>
+      <if test="attributeLevel != null">
+        #{attributeLevel,jdbcType=INTEGER},
+      </if>
+      <if test="supAttribute != null">
+        #{supAttribute,jdbcType=INTEGER},
+      </if>
       <if test="attributeName != null">
         #{attributeName,jdbcType=VARCHAR},
       </if>
@@ -53,6 +76,15 @@
   <update id="updateByPrimaryKeySelective" parameterType="me.account.account.server.po.AccountAttribute">
     update account_attribute
     <set>
+      <if test="rigidDemand != null">
+        rigid_demand = #{rigidDemand,jdbcType=INTEGER},
+      </if>
+      <if test="attributeLevel != null">
+        attribute_level = #{attributeLevel,jdbcType=INTEGER},
+      </if>
+      <if test="supAttribute != null">
+        sup_attribute = #{supAttribute,jdbcType=INTEGER},
+      </if>
       <if test="attributeName != null">
         attribute_name = #{attributeName,jdbcType=VARCHAR},
       </if>
@@ -64,8 +96,11 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="me.account.account.server.po.AccountAttribute">
     update account_attribute
-    set attribute_name = #{attributeName,jdbcType=VARCHAR},
-      attribute_desc = #{attributeDesc,jdbcType=VARCHAR}
+    set rigid_demand = #{rigidDemand,jdbcType=INTEGER},
+        attribute_level = #{attributeLevel,jdbcType=INTEGER},
+        sup_attribute = #{supAttribute,jdbcType=INTEGER},
+        attribute_name = #{attributeName,jdbcType=VARCHAR},
+        attribute_desc = #{attributeDesc,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

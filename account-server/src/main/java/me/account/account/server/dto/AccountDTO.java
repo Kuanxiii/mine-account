@@ -1,11 +1,18 @@
 package me.account.account.server.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Data
-public class AccountDTO {
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class AccountDTO implements Serializable {
     // day_no,week_no,mouth_no,stat,amount,use_in,main_attribute,attribute,remark
     private Integer id;
     /**

@@ -1,14 +1,14 @@
 package me.account.account.server.po;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class BillingAccounts implements Serializable {
     private Integer id;
 
