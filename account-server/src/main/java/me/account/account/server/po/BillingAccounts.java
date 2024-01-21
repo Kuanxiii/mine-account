@@ -26,7 +26,7 @@ public class BillingAccounts implements Serializable {
 
     private Integer mainAttribute;
 
-    private String attribute;
+    private String attributes;
 
     private String remark;
 

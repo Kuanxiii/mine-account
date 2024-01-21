@@ -5,12 +5,12 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="rigid_demand" jdbcType="INTEGER" property="rigidDemand" />
     <result column="attribute_level" jdbcType="INTEGER" property="attributeLevel" />
-    <result column="sup_attribute" jdbcType="INTEGER" property="supAttribute" />
+    <result column="sup_attribute_id" jdbcType="INTEGER" property="supAttributeId" />
     <result column="attribute_name" jdbcType="VARCHAR" property="attributeName" />
     <result column="attribute_desc" jdbcType="VARCHAR" property="attributeDesc" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, rigid_demand, attribute_level, sup_attribute, attribute_name, attribute_desc
+    id, rigid_demand, attribute_level, sup_attribute_id, attribute_name, attribute_desc
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -24,10 +24,10 @@
   </delete>
   <insert id="insert" parameterType="me.account.account.server.po.AccountAttribute">
     insert into account_attribute (id, rigid_demand, attribute_level,
-                                   sup_attribute, attribute_name, attribute_desc
+                                   sup_attribute_id, attribute_name, attribute_desc
     )
     values (#{id,jdbcType=INTEGER}, #{rigidDemand,jdbcType=INTEGER}, #{attributeLevel,jdbcType=INTEGER},
-            #{supAttribute,jdbcType=INTEGER}, #{attributeName,jdbcType=VARCHAR}, #{attributeDesc,jdbcType=VARCHAR}
+            #{supAttributeId,jdbcType=INTEGER}, #{attributeName,jdbcType=VARCHAR}, #{attributeDesc,jdbcType=VARCHAR}
            )
   </insert>
   <insert id="insertSelective" parameterType="me.account.account.server.po.AccountAttribute">
@@ -42,8 +42,8 @@
       <if test="attributeLevel != null">
         attribute_level,
       </if>
-      <if test="supAttribute != null">
-        sup_attribute,
+      <if test="supAttributeId != null">
+        sup_attribute_id,
       </if>
       <if test="attributeName != null">
         attribute_name,
@@ -62,8 +62,8 @@
       <if test="attributeLevel != null">
         #{attributeLevel,jdbcType=INTEGER},
       </if>
-      <if test="supAttribute != null">
-        #{supAttribute,jdbcType=INTEGER},
+      <if test="supAttributeId != null">
+        #{supAttributeId,jdbcType=INTEGER},
       </if>
       <if test="attributeName != null">
         #{attributeName,jdbcType=VARCHAR},
@@ -82,8 +82,8 @@
       <if test="attributeLevel != null">
         attribute_level = #{attributeLevel,jdbcType=INTEGER},
       </if>
-      <if test="supAttribute != null">
-        sup_attribute = #{supAttribute,jdbcType=INTEGER},
+      <if test="supAttributeId != null">
+        sup_attribute_id = #{supAttributeId,jdbcType=INTEGER},
       </if>
       <if test="attributeName != null">
         attribute_name = #{attributeName,jdbcType=VARCHAR},
@@ -98,7 +98,7 @@
     update account_attribute
     set rigid_demand = #{rigidDemand,jdbcType=INTEGER},
         attribute_level = #{attributeLevel,jdbcType=INTEGER},
-        sup_attribute = #{supAttribute,jdbcType=INTEGER},
+        sup_attribute_id = #{supAttributeId,jdbcType=INTEGER},
         attribute_name = #{attributeName,jdbcType=VARCHAR},
         attribute_desc = #{attributeDesc,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

@@ -18,7 +18,7 @@ public class AccountAttribute implements Serializable {
 
     private Integer attributeLevel;
 
-    private Integer supAttribute;
+    private Integer supAttributeId;
 
     private String attributeName;
 

@@ -47,3 +47,8 @@ mybatis:
   type-aliases-package: me.account.account.server.po
   configuration:
     map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
+logging:
+  level:
+    me.account.account.server.mapper: DEBUG
