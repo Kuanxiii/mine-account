@@ -1,16 +1,9 @@
 package me.account.account.server.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class ResponseDTO<T> implements Serializable {
+public class ResponseDTO< D > implements Serializable {
     /**
      * 接口响应状态码
      */
@@ -22,5 +15,13 @@ public class ResponseDTO<T> implements Serializable {
     /**
      * 接口响应数据
      */
-    private T data;
+    private D data;
+
+    public D getData() {
+        return data;
+    }
+
+    public void setData( D data ) {
+        this.data = data;
+    }
 }

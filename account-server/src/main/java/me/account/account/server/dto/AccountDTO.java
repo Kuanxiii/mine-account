@@ -1,67 +1,63 @@
 package me.account.account.server.dto;
 
-import lombok.*;
-import me.account.account.server.annotations.ExcelName;
+import me.account.account.server.annotations.FieldDesc;
 import me.account.account.server.constants.AccountConstants;
-import me.account.account.server.po.BillingAccounts;
+import me.account.account.server.constants.CommonConstants;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
-@EqualsAndHashCode(callSuper = false)
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class AccountDTO extends AbstractEnableExcelBean implements Serializable {
-    // day_no,week_no,mouth_no,stat,amount,use_in,main_attribute,attributes,remark
+
     private Integer id;
 
-    @ExcelName(AccountConstants.DAY_NO_DESC)
+    @FieldDesc(CommonConstants.USER_ID_DESC)
+    private Integer userId;
+
+    @FieldDesc(AccountConstants.DAY_NO_DESC)
     private Integer dayNo;
 
-    @ExcelName(AccountConstants.WEEK_NO_DESC)
+    @FieldDesc(AccountConstants.WEEK_NO_DESC)
     private Integer weekNo;
 
-    @ExcelName(AccountConstants.MOUTH_NO_DESC)
+    @FieldDesc(AccountConstants.MOUTH_NO_DESC)
     private Integer mouthNo;
 
-    @ExcelName(AccountConstants.STAT_DESC)
+    @FieldDesc(AccountConstants.STAT_DESC)
     private String stat;
 
-    @ExcelName("金额")
+    @FieldDesc(AccountConstants.AMOUNT_DESC)
     private BigDecimal amount;
 
-    @ExcelName("使用于某处")
+    @FieldDesc(AccountConstants.USE_IN_DESC)
     private String useIn;
 
-    @ExcelName(AccountConstants.MAIN_ATTRIBUTE_DESC)
-    private AttributeDTO mainAttribute;
+    @FieldDesc(AccountConstants.ECONOMIC_ATTRIBUTE_DESC)
+    private Integer economicAttributeId;
 
-    @ExcelName("其他属性")
-    private List<AttributeDTO> attributes;
+    @FieldDesc(AccountConstants.PURPOSE_ATTRIBUTES_DESC)
+    private List<Integer> purposeAttributeIds;
 
-    @ExcelName("备注")
+    @FieldDesc(CommonConstants.REMARK_DESC)
     private String remark;
 
-    public BillingAccounts toPOJO() {
-        StringBuilder attributesBuilder = new StringBuilder();
-        attributes.forEach(attribute -> attributesBuilder.append(attribute.getId()).append(","));
-        attributesBuilder.deleteCharAt(attributesBuilder.length() - 1);
-        return BillingAccounts.builder()
-                .id(id)
-                .dayNo(dayNo)
-                .weekNo(weekNo)
-                .mouthNo(mouthNo)
-                .stat(stat)
-                .amount(amount)
-                .useIn(useIn)
-                .mainAttribute(mainAttribute.getId())
-                .attributes(attributesBuilder.toString())
-                .remark(remark)
-                .build();
-    }
+//    public BillingAccounts toPOJO() {
+//        StringBuilder attributesBuilder = new StringBuilder();
+//        attributes.forEach(attribute -> attributesBuilder.append(attribute.getId()).append(","));
+//        attributesBuilder.deleteCharAt(attributesBuilder.length() - 1);
+//        return BillingAccounts.builder()
+//                .id(id)
+//                .dayNo(dayNo)
+//                .weekNo(weekNo)
+//                .mouthNo(mouthNo)
+//                .stat(stat)
+//                .amount(amount)
+//                .useIn(useIn)
+//                .mainAttribute(mainAttribute.getId())
+//                .attributes(attributesBuilder.toString())
+//                .remark(remark)
+//                .build();
+//    }
 
 }

@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.account.account.server.mapper.BillsMapper">
+  <resultMap id="BaseResultMap" type="me.account.account.server.po.Bills">
+    <id column="bill_id" jdbcType="INTEGER" property="billId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="day_no" jdbcType="INTEGER" property="dayNo" />
+    <result column="week_no" jdbcType="INTEGER" property="weekNo" />
+    <result column="mouth_no" jdbcType="INTEGER" property="mouthNo" />
+    <result column="stat" jdbcType="VARCHAR" property="stat" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="use_in" jdbcType="VARCHAR" property="useIn" />
+    <result column="economic_attribute_id" jdbcType="INTEGER" property="economicAttributeId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="insert_time" jdbcType="TIMESTAMP" property="insertTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    bill_id, user_id, day_no, week_no, mouth_no, stat, amount, use_in, economic_attribute_id, 
+    remark, insert_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="me.account.account.server.po.example.BillsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bills
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bills
+    where bill_id = #{billId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from bills
+    where bill_id = #{billId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="me.account.account.server.po.example.BillsExample">
+    delete from bills
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="me.account.account.server.po.Bills">
+    insert into bills (bill_id, user_id, day_no, 
+      week_no, mouth_no, stat, 
+      amount, use_in, economic_attribute_id, 
+      remark, insert_time, update_time
+      )
+    values (#{billId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{dayNo,jdbcType=INTEGER}, 
+      #{weekNo,jdbcType=INTEGER}, #{mouthNo,jdbcType=INTEGER}, #{stat,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=DECIMAL}, #{useIn,jdbcType=VARCHAR}, #{economicAttributeId,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{insertTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="me.account.account.server.po.Bills">
+    insert into bills
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="billId != null">
+        bill_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="dayNo != null">
+        day_no,
+      </if>
+      <if test="weekNo != null">
+        week_no,
+      </if>
+      <if test="mouthNo != null">
+        mouth_no,
+      </if>
+      <if test="stat != null">
+        stat,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="useIn != null">
+        use_in,
+      </if>
+      <if test="economicAttributeId != null">
+        economic_attribute_id,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="insertTime != null">
+        insert_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="billId != null">
+        #{billId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="dayNo != null">
+        #{dayNo,jdbcType=INTEGER},
+      </if>
+      <if test="weekNo != null">
+        #{weekNo,jdbcType=INTEGER},
+      </if>
+      <if test="mouthNo != null">
+        #{mouthNo,jdbcType=INTEGER},
+      </if>
+      <if test="stat != null">
+        #{stat,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="useIn != null">
+        #{useIn,jdbcType=VARCHAR},
+      </if>
+      <if test="economicAttributeId != null">
+        #{economicAttributeId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null">
+        #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="me.account.account.server.po.example.BillsExample" resultType="java.lang.Long">
+    select count(*) from bills
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update bills
+    <set>
+      <if test="record.billId != null">
+        bill_id = #{record.billId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dayNo != null">
+        day_no = #{record.dayNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.weekNo != null">
+        week_no = #{record.weekNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.mouthNo != null">
+        mouth_no = #{record.mouthNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.stat != null">
+        stat = #{record.stat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null">
+        amount = #{record.amount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.useIn != null">
+        use_in = #{record.useIn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.economicAttributeId != null">
+        economic_attribute_id = #{record.economicAttributeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insertTime != null">
+        insert_time = #{record.insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update bills
+    set bill_id = #{record.billId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      day_no = #{record.dayNo,jdbcType=INTEGER},
+      week_no = #{record.weekNo,jdbcType=INTEGER},
+      mouth_no = #{record.mouthNo,jdbcType=INTEGER},
+      stat = #{record.stat,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=DECIMAL},
+      use_in = #{record.useIn,jdbcType=VARCHAR},
+      economic_attribute_id = #{record.economicAttributeId,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      insert_time = #{record.insertTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="me.account.account.server.po.Bills">
+    update bills
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="dayNo != null">
+        day_no = #{dayNo,jdbcType=INTEGER},
+      </if>
+      <if test="weekNo != null">
+        week_no = #{weekNo,jdbcType=INTEGER},
+      </if>
+      <if test="mouthNo != null">
+        mouth_no = #{mouthNo,jdbcType=INTEGER},
+      </if>
+      <if test="stat != null">
+        stat = #{stat,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="useIn != null">
+        use_in = #{useIn,jdbcType=VARCHAR},
+      </if>
+      <if test="economicAttributeId != null">
+        economic_attribute_id = #{economicAttributeId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null">
+        insert_time = #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where bill_id = #{billId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.account.account.server.po.Bills">
+    update bills
+    set user_id = #{userId,jdbcType=INTEGER},
+      day_no = #{dayNo,jdbcType=INTEGER},
+      week_no = #{weekNo,jdbcType=INTEGER},
+      mouth_no = #{mouthNo,jdbcType=INTEGER},
+      stat = #{stat,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      use_in = #{useIn,jdbcType=VARCHAR},
+      economic_attribute_id = #{economicAttributeId,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      insert_time = #{insertTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where bill_id = #{billId,jdbcType=INTEGER}
+  </update>
+</mapper>

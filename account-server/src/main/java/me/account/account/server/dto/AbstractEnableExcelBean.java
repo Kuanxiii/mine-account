@@ -1,7 +1,6 @@
 package me.account.account.server.dto;
 
-import me.account.account.server.annotations.ExcelName;
-import org.apache.poi.ss.usermodel.Row;
+import me.account.account.server.annotations.FieldDesc;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -19,9 +18,9 @@ public class AbstractEnableExcelBean implements EnableExcelBean {
     public Map<String, String> getExcelNameMap() {
         Map<String, String> map = new HashMap<>();
         for(Field field : this.getClass().getDeclaredFields()){
-            ExcelName excelName = field.getAnnotation(ExcelName.class);
-            if(excelName != null){
-                map.put(excelName.value(), field.getName());
+            FieldDesc fieldDesc = field.getAnnotation(FieldDesc.class);
+            if(fieldDesc != null){
+                map.put(fieldDesc.value(), field.getName());
             }
         }
         return map;
@@ -36,9 +35,9 @@ public class AbstractEnableExcelBean implements EnableExcelBean {
     public List<String> getExcelNameList() {
         List<String> excelNameList = new ArrayList<>();
         for(Field field : this.getClass().getDeclaredFields()){
-            ExcelName excelName = field.getAnnotation(ExcelName.class);
-            if(excelName != null){
-                excelNameList.add(excelName.value());
+            FieldDesc fieldDesc = field.getAnnotation(FieldDesc.class);
+            if(fieldDesc != null){
+                excelNameList.add(fieldDesc.value());
             }
         }
         return excelNameList;

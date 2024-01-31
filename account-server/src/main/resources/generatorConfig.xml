@@ -65,9 +65,13 @@
 
         <!-- 相关表的配置 -->
 
-        <table tableName="billing_accounts" domainObjectName="BillingAccounts" enableCountByExample="false"  enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"/>
+        <table tableName="economic_attributes" domainObjectName="EconomicAttributes" />
 
-        <table tableName="account_attribute" domainObjectName="AccountAttribute" enableCountByExample="false"  enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"/>
+        <table tableName="purpose_attributes" domainObjectName="PurposeAttributes" />
+
+        <table tableName="bills" domainObjectName="Bills" />
+
+        <table tableName="bill_attribute_relation" domainObjectName="BillAttributeRelation" />
 
     </context>
 

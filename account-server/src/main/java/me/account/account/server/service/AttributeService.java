@@ -2,8 +2,13 @@ package me.account.account.server.service;
 
 import me.account.account.server.constants.AttributeConstants;
 import me.account.account.server.dto.AttributeDTO;
-import me.account.account.server.mapper.AccountAttributeMapper;
-import me.account.account.server.po.AccountAttribute;
+import me.account.account.server.mapper.EconomicAttributesMapper;
+import me.account.account.server.mapper.PurposeAttributesMapper;
+import me.account.account.server.po.AbstractAttributePO;
+import me.account.account.server.po.EconomicAttributes;
+import me.account.account.server.po.PurposeAttributes;
+import me.account.account.server.po.example.EconomicAttributesExample;
+import me.account.account.server.po.example.PurposeAttributesExample;
 import me.account.account.server.utils.ExcelHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.*;
@@ -23,53 +28,50 @@ import java.util.stream.Collectors;
 public class AttributeService {
 
     @Resource
-    private AccountAttributeMapper accountAttributeMapper;
+    private EconomicAttributesMapper economicAttributesMapper;
+
+    @Resource
+    private PurposeAttributesMapper purposeAttributesMapper;
 
     public int addAttribute(AttributeDTO attributeDTO){
-        return accountAttributeMapper.insertSelective(attributeDTO.toPOJO());
+        return insertSelective(attributeDTO.toPOJO());
     }
 
     @Transactional
     public void batchAddAttribute(List<AttributeDTO> attributeDTOs){
-        attributeDTOs.forEach(attributeDTO -> accountAttributeMapper.insertSelective(attributeDTO.toPOJO()));
+        attributeDTOs.forEach(attributeDTO -> insertSelective(attributeDTO.toPOJO()));
     }
 
-    public List<AttributeDTO> getAllMainAttribute(){
+    public List<AttributeDTO> getAllEconomicAttribute(String userCode){
         List<AttributeDTO> attributeDTOs = new ArrayList<>();
-        List<AccountAttribute> accountAttributeList = accountAttributeMapper.selectByAttributeLevel(1);
-        accountAttributeList.forEach(
+        // todo 应该做userCode->userId的转换，当前还未添加用户维度
+        Integer userId = 1;
+        EconomicAttributesExample example = new EconomicAttributesExample();
+        example.createCriteria().andUserIdEqualTo(userId);
+        List<EconomicAttributes> economicAttributes = economicAttributesMapper.selectByExample(example);
+        economicAttributes.forEach(
                 attribute -> {
-                    AttributeDTO attributeDTO = AttributeDTO.builder().
-                            attributeName(attribute.getAttributeName()).
-                            attributeDesc(attribute.getAttributeDesc()).
-                            rigidDemand(attribute.getRigidDemand()).
-                            attributeLevel(attribute.getAttributeLevel()).
-                            supAttributeId(attribute.getSupAttributeId()).
-                            id(attribute.getId()).
-                            build();
+                    AttributeDTO attributeDTO = new AttributeDTO(attribute);
                     attributeDTOs.add(attributeDTO);
                 }
         );
         return attributeDTOs;
     }
 
-    public List<AttributeDTO> getAttributesBySupAttributeId(Integer supAttributeId){
-        List<AttributeDTO> attributes = new ArrayList<>();
-        List<AccountAttribute> accountAttributeList = accountAttributeMapper.selectBySupAttributeId(supAttributeId);
-        accountAttributeList.forEach(
+    public List<AttributeDTO> getAllPurposeAttribute(String userCode){
+        List<AttributeDTO> attributeDTOs = new ArrayList<>();
+        // todo 应该做userCode->userId的转换，当前还未添加用户维度
+        Integer userId = 1;
+        PurposeAttributesExample example = new PurposeAttributesExample();
+        example.createCriteria().andUserIdEqualTo(userId);
+        List<PurposeAttributes> purposeAttributes = purposeAttributesMapper.selectByExample(example);
+        purposeAttributes.forEach(
                 attribute -> {
-                    AttributeDTO attributeDTO = AttributeDTO.builder().
-                            attributeName(attribute.getAttributeName()).
-                            attributeDesc(attribute.getAttributeDesc()).
-                            rigidDemand(attribute.getRigidDemand()).
-                            attributeLevel(attribute.getAttributeLevel()).
-                            supAttributeId(attribute.getSupAttributeId()).
-                            id(attribute.getId()).
-                            build();
-                    attributes.add(attributeDTO);
+                    AttributeDTO attributeDTO = new AttributeDTO(attribute);
+                    attributeDTOs.add(attributeDTO);
                 }
         );
-        return attributes;
+        return attributeDTOs;
     }
 
 
@@ -95,32 +97,16 @@ public class AttributeService {
 
     private void setDataValidation(List<String> excelNames, ExcelHelper excelHelper){
         int rigidDemandColNum = -1;
-        int attributeLevelColNum = -1;
-        int supAttributeNameColNum = -1;
         for (int i = 0; i < excelNames.size(); i++) {
             if (StringUtils.equalsIgnoreCase(excelNames.get(i), AttributeConstants.RIGID_DEMAND_DESC)){
                 rigidDemandColNum = i;
             }
-            if (StringUtils.equalsIgnoreCase(excelNames.get(i), AttributeConstants.ATTRIBUTE_LEVEL_DESC)){
-                attributeLevelColNum = i;
-            }
-            if (StringUtils.equalsIgnoreCase(excelNames.get(i), AttributeConstants.SUP_ATTRIBUTE_NAME)){
-                supAttributeNameColNum = i;
-            }
         }
 
         List<String> rigidDemandData = Arrays.asList("是", "否");
-        List<String> attributeLevelData = Arrays.asList("1", "2");
-        List<String> supAttributeNameData = getAllMainAttribute().stream().map(AttributeDTO::getAttributeName).collect(Collectors.toList());
 
         if (rigidDemandColNum != -1) {
             excelHelper.setDataValidation(rigidDemandData.toArray(new String[0]), 2, 65535, rigidDemandColNum, rigidDemandColNum);
-        }
-        if (attributeLevelColNum != -1) {
-            excelHelper.setDataValidation(attributeLevelData.toArray(new String[0]), 2, 65535, attributeLevelColNum, attributeLevelColNum);
-        }
-        if (supAttributeNameColNum != -1) {
-            excelHelper.setDataValidation(supAttributeNameData.toArray(new String[0]), 2, 65535, supAttributeNameColNum, supAttributeNameColNum);
         }
     }
 
@@ -132,7 +118,6 @@ public class AttributeService {
         Map<Integer, String> titleMap = new HashMap<>();
         List<AttributeDTO> attributeDTOs = new ArrayList<>();
         Map<String, String> excelNameMap = new AttributeDTO().getExcelNameMap();
-        List<AttributeDTO> mainAttributes = getAllMainAttribute();
         try(Workbook workbook = new XSSFWorkbook(excelFile.getInputStream())) {
             Sheet sheet = workbook.getSheet("Attribute");
             for(Row row : sheet){
@@ -144,29 +129,7 @@ public class AttributeService {
                 Map<String, String> dataMap = new HashMap<>();
                 row.forEach(cell -> dataMap.put(titleMap.get(cell.getColumnIndex()), cell.getStringCellValue()));
 
-
-                // 上级属性名转上级属性id
-                if (StringUtils.isNotBlank(dataMap.get("supAttributeId"))) {
-                    // Excel表头中的上级属性id对应的是上级属性名，这里需要转换
-                    String supAttributeName = dataMap.get("supAttributeId");
-                    boolean isFind = false;
-                    for (AttributeDTO mainAttribute : mainAttributes) {
-                        if (mainAttribute.getAttributeName().equals(supAttributeName)) {
-                            dataMap.put("supAttributeId", String.valueOf(mainAttribute.getId()));
-                            isFind = true;
-                            break;
-                        }
-                    }
-                    if (!isFind) {
-                        // todo 这里找不到应该报错，待后续完善报错逻辑
-                    }
-                } else if(Objects.equals(dataMap.getOrDefault("attributeLevel", "").trim(), "1")) {
-                    // 如果是主属性，需要先添加
-                    // 添加至数据库，补充主键并塞回mainAttributes以便后续添加子属性
-                    // 因为这里已经入库，所以直接continue，不加入批量插入列表
-                    AttributeDTO mainAttribute = new AttributeDTO(dataMap);
-                    mainAttribute.setId(addAttribute(mainAttribute));
-                    mainAttributes.add(mainAttribute);
+                if (StringUtils.isEmpty(dataMap.get(AttributeConstants.ATTRIBUTE_NAME_DESC))) {
                     continue;
                 }
 
@@ -177,6 +140,16 @@ public class AttributeService {
 
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private int insertSelective(AbstractAttributePO attributePO){
+        if (attributePO instanceof EconomicAttributes) {
+            return economicAttributesMapper.insertSelective((EconomicAttributes) attributePO);
+        } else if (attributePO instanceof PurposeAttributes) {
+            return purposeAttributesMapper.insertSelective((PurposeAttributes) attributePO);
+        } else {
+            throw new RuntimeException("未知的属性类型");
         }
     }
 

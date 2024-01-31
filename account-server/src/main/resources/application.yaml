@@ -8,7 +8,6 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     # 数据源更改为druid
     type: com.alibaba.druid.pool.DruidDataSource
-
     druid:
       # 连接池配置
       # 配置初始化大小、最小、最大
@@ -38,7 +37,7 @@ spring:
         allow: 127.0.0.1
   sql:
     init:
-      mode: EMBEDDED
+      mode: ALWAYS
       schema-locations:
         - classpath:sql/mysql.sql
 # 开启驼峰映射

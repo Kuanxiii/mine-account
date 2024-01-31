@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.account.account.server.mapper.PurposeAttributesMapper">
+  <resultMap id="BaseResultMap" type="me.account.account.server.po.PurposeAttributes">
+    <id column="purpose_attribute_id" jdbcType="INTEGER" property="purposeAttributeId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="attribute_name" jdbcType="VARCHAR" property="attributeName" />
+    <result column="attribute_desc" jdbcType="VARCHAR" property="attributeDesc" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="insert_time" jdbcType="TIMESTAMP" property="insertTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    purpose_attribute_id, user_id, attribute_name, attribute_desc, remark, insert_time, 
+    update_time
+  </sql>
+  <select id="selectByExample" parameterType="me.account.account.server.po.example.PurposeAttributesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from purpose_attributes
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from purpose_attributes
+    where purpose_attribute_id = #{purposeAttributeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from purpose_attributes
+    where purpose_attribute_id = #{purposeAttributeId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="me.account.account.server.po.example.PurposeAttributesExample">
+    delete from purpose_attributes
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="me.account.account.server.po.PurposeAttributes">
+    insert into purpose_attributes (purpose_attribute_id, user_id, attribute_name, 
+      attribute_desc, remark, insert_time, 
+      update_time)
+    values (#{purposeAttributeId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{attributeName,jdbcType=VARCHAR}, 
+      #{attributeDesc,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{insertTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="me.account.account.server.po.PurposeAttributes">
+    insert into purpose_attributes
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="purposeAttributeId != null">
+        purpose_attribute_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="attributeName != null">
+        attribute_name,
+      </if>
+      <if test="attributeDesc != null">
+        attribute_desc,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="insertTime != null">
+        insert_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="purposeAttributeId != null">
+        #{purposeAttributeId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="attributeName != null">
+        #{attributeName,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeDesc != null">
+        #{attributeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null">
+        #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="me.account.account.server.po.example.PurposeAttributesExample" resultType="java.lang.Long">
+    select count(*) from purpose_attributes
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update purpose_attributes
+    <set>
+      <if test="record.purposeAttributeId != null">
+        purpose_attribute_id = #{record.purposeAttributeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.attributeName != null">
+        attribute_name = #{record.attributeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attributeDesc != null">
+        attribute_desc = #{record.attributeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insertTime != null">
+        insert_time = #{record.insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update purpose_attributes
+    set purpose_attribute_id = #{record.purposeAttributeId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      attribute_name = #{record.attributeName,jdbcType=VARCHAR},
+      attribute_desc = #{record.attributeDesc,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      insert_time = #{record.insertTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="me.account.account.server.po.PurposeAttributes">
+    update purpose_attributes
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="attributeName != null">
+        attribute_name = #{attributeName,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeDesc != null">
+        attribute_desc = #{attributeDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null">
+        insert_time = #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where purpose_attribute_id = #{purposeAttributeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.account.account.server.po.PurposeAttributes">
+    update purpose_attributes
+    set user_id = #{userId,jdbcType=INTEGER},
+      attribute_name = #{attributeName,jdbcType=VARCHAR},
+      attribute_desc = #{attributeDesc,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      insert_time = #{insertTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where purpose_attribute_id = #{purposeAttributeId,jdbcType=INTEGER}
+  </update>
+</mapper>

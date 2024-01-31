@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD})
-public @interface ExcelName {
-    @AliasFor("name")
+public @interface FieldDesc {
+    @AliasFor("desc")
     String value() default "";
 }
