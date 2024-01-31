@@ -1,12 +1,10 @@
 package me.account.account.server.po.example;
 
-import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Getter
 public class BillAttributeRelationExample {
     protected String orderByClause;
 
