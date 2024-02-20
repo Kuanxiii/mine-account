@@ -104,19 +104,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="me.account.account.server.po.EconomicAttributes">
-    insert into economic_attributes (economic_attribute_id, user_id, attribute_name, 
-      attribute_desc, rigid_demand, remark, 
-      insert_time, update_time)
-    values (#{economicAttributeId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{attributeName,jdbcType=VARCHAR}, 
-      #{attributeDesc,jdbcType=VARCHAR}, #{rigidDemand,jdbcType=BIT}, #{remark,jdbcType=VARCHAR}, 
-      #{insertTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    <selectKey keyProperty="economicAttributeId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into economic_attributes (user_id, attribute_name, attribute_desc, 
+      rigid_demand, remark, insert_time, 
+      update_time)
+    values (#{userId,jdbcType=INTEGER}, #{attributeName,jdbcType=VARCHAR}, #{attributeDesc,jdbcType=VARCHAR}, 
+      #{rigidDemand,jdbcType=BIT}, #{remark,jdbcType=VARCHAR}, #{insertTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="me.account.account.server.po.EconomicAttributes">
+    <selectKey keyProperty="economicAttributeId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into economic_attributes
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="economicAttributeId != null">
-        economic_attribute_id,
-      </if>
       <if test="userId != null">
         user_id,
       </if>
@@ -140,9 +143,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="economicAttributeId != null">
-        #{economicAttributeId,jdbcType=INTEGER},
-      </if>
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
       </if>

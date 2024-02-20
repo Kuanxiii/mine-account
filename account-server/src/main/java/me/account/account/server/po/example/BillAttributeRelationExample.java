@@ -1,6 +1,5 @@
 package me.account.account.server.po.example;
 
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,8 +19,20 @@ public class BillAttributeRelationExample {
         this.orderByClause = orderByClause;
     }
 
+    public String getOrderByClause() {
+        return orderByClause;
+    }
+
     public void setDistinct(boolean distinct) {
         this.distinct = distinct;
+    }
+
+    public boolean isDistinct() {
+        return distinct;
+    }
+
+    public List<Criteria> getOredCriteria() {
+        return oredCriteria;
     }
 
     public void or(Criteria criteria) {

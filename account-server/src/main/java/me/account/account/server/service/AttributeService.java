@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class AttributeService {

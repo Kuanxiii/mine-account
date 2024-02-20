@@ -37,7 +37,7 @@ spring:
         allow: 127.0.0.1
   sql:
     init:
-      mode: ALWAYS
+      mode: EMBEDDED
       schema-locations:
         - classpath:sql/mysql.sql
 # 开启驼峰映射

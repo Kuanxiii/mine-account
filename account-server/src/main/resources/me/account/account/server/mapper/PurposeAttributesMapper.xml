@@ -103,19 +103,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="me.account.account.server.po.PurposeAttributes">
-    insert into purpose_attributes (purpose_attribute_id, user_id, attribute_name, 
-      attribute_desc, remark, insert_time, 
-      update_time)
-    values (#{purposeAttributeId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{attributeName,jdbcType=VARCHAR}, 
-      #{attributeDesc,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{insertTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+    <selectKey keyProperty="purposeAttributeId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into purpose_attributes (user_id, attribute_name, attribute_desc, 
+      remark, insert_time, update_time
+      )
+    values (#{userId,jdbcType=INTEGER}, #{attributeName,jdbcType=VARCHAR}, #{attributeDesc,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{insertTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="me.account.account.server.po.PurposeAttributes">
+    <selectKey keyProperty="purposeAttributeId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into purpose_attributes
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="purposeAttributeId != null">
-        purpose_attribute_id,
-      </if>
       <if test="userId != null">
         user_id,
       </if>
@@ -136,9 +139,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="purposeAttributeId != null">
-        #{purposeAttributeId,jdbcType=INTEGER},
-      </if>
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
       </if>

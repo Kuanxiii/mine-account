@@ -15,8 +15,9 @@ public class AttributeDTO extends AbstractEnableExcelBean implements Serializabl
 
     private Integer id;
 
+    // todo 当前用户id都按1算
     @FieldDesc(CommonConstants.USER_ID_DESC)
-    private Integer userId;
+    private Integer userId = 1;
 
     @FieldDesc(AttributeConstants.ATTRIBUTE_NAME_DESC)
     private String attributeName;

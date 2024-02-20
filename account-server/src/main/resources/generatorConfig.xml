@@ -65,13 +65,21 @@
 
         <!-- 相关表的配置 -->
 
-        <table tableName="economic_attributes" domainObjectName="EconomicAttributes" />
+        <table tableName="economic_attributes" domainObjectName="EconomicAttributes">
+            <generatedKey column="economic_attribute_id" sqlStatement="MySql" identity="true"/>
+        </table>
 
-        <table tableName="purpose_attributes" domainObjectName="PurposeAttributes" />
+        <table tableName="purpose_attributes" domainObjectName="PurposeAttributes">
+            <generatedKey column="purpose_attribute_id" sqlStatement="MySql" identity="true"/>
+        </table>
 
-        <table tableName="bills" domainObjectName="Bills" />
+        <table tableName="bills" domainObjectName="Bills">
+            <generatedKey column="bill_id" sqlStatement="MySql" identity="true"/>
+        </table>
 
-        <table tableName="bill_attribute_relation" domainObjectName="BillAttributeRelation" />
+        <table tableName="bill_attribute_relation" domainObjectName="BillAttributeRelation">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
 
     </context>
 

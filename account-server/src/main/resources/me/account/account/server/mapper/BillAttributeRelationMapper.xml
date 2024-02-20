@@ -100,17 +100,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="me.account.account.server.po.BillAttributeRelation">
-    insert into bill_attribute_relation (id, bill_id, purpose_attribute_id, 
-      insert_time, update_time)
-    values (#{id,jdbcType=INTEGER}, #{billId,jdbcType=INTEGER}, #{purposeAttributeId,jdbcType=INTEGER}, 
-      #{insertTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into bill_attribute_relation (bill_id, purpose_attribute_id, insert_time, 
+      update_time)
+    values (#{billId,jdbcType=INTEGER}, #{purposeAttributeId,jdbcType=INTEGER}, #{insertTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="me.account.account.server.po.BillAttributeRelation">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into bill_attribute_relation
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="billId != null">
         bill_id,
       </if>
@@ -125,9 +128,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="billId != null">
         #{billId,jdbcType=INTEGER},
       </if>
