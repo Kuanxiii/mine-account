@@ -39,7 +39,7 @@
 
         <!-- 实体类生成的位置 -->
 
-        <javaModelGenerator targetPackage="me.account.account.server.po" targetProject="account-server/src/main/java">
+        <javaModelGenerator targetPackage="mine.account.account.server.po" targetProject="account-server/src/main/java">
 
             <property name="enableSubPackages" value="false"/>
 
@@ -57,7 +57,7 @@
 
         <!-- Mapper 接口文件的位置 -->
 
-        <javaClientGenerator targetPackage="me.account.account.server.mapper" targetProject="account-server/src/main/java" type="XMLMAPPER">
+        <javaClientGenerator targetPackage="mine.account.account.server.mapper" targetProject="account-server/src/main/java" type="XMLMAPPER">
 
             <property name="enableSubPackages" value="false"/>
 
